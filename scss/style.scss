@@ -1,0 +1,32 @@
+:root{
+    --select-width:250px
+}
+*{
+    box-sizing: border-box;
+    margin: 0;padding: 0;
+}
+
+body{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.select{
+    .container{
+      width: var(--select-width);  
+      font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif ;
+      font-weight:600 ;
+      font-size: 19px;
+    }
+    &__label{
+        height: 40px;
+        padding: 8px;
+        border-radius: 10px;
+        border: 1px solid black;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
