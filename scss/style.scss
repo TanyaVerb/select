@@ -52,6 +52,7 @@ body {
     }
 
     &__drop-down {
+        display: none;
         list-style: none;
         border: 1px solid black;
         border-radius: 10px;
@@ -84,6 +85,11 @@ body {
         margin: 2px;
     }
     }
-
+&.active{
+    & .select__drop-down{
+display: block;
+    }
+    
+}
     
 }
