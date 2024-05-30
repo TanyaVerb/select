@@ -34,6 +34,8 @@ const options = [
   },
 ];
 
+// console.log(options[0].group);
+
 class Select {
   constructor(selector, options, width) {
     this.$select = document.querySelector(selector);
@@ -44,11 +46,15 @@ class Select {
 
     //Перебираем элементы массива и формируем строку HTML-кода для элементов выпадающего списка
     // this.itemsForDropDown = this.options
+    //   //деструктуризация объекта
     //   .map(({ label, value }) => {
     //     return `<li data-id = ${value}>${label}</li>`;
     //   })
     //   .join(""); // из массива элементы в одну строку (убираем запятые)
 
+    // console.log(this.itemsForDropDown);
+
+    //items - это options
     this.itemsForDropDown = this.initGroup(this.options)
       .map(([key, items]) => {
         if (key) {
@@ -58,7 +64,6 @@ class Select {
             })
             .join("");
           console.log(groupList);
-
           return `<ul style= "padding: 8px"> <span style= "color: gray">${key}</span>${groupList}</ul>
       `;
         } else {
@@ -70,49 +75,33 @@ class Select {
         }
       })
       .join("");
-
-    //вставляем полученный HTML-код внутрь this.$dropDown (ul)
+    //вставляем полученный HTML-код внутрь this.$dropDown (ul):
     this.$dropDown.insertAdjacentHTML("afterbegin", this.itemsForDropDown);
-
     this.$select.addEventListener("click", (e) => {
       console.log(e.target);
       console.log(e.target.tagName);
       console.log(e.target.classList);
       if (e.target.classList.contains("select__label")) {
-        //если  класс active есть, то close()
-        //если нет - open();
-
-        // if (this.$select.classList.contains('active')){
-        //    this.close();
-        // }else{
-        //   this.open();
-        // }
         this.$select.classList.toggle("active");
-
-        // this.close();
-        console.log("ты кликнул на label");
       } else {
         if (e.target.tagName.toLowerCase() === "li") {
-          console.log("ты кликнул на li");
-          console.log(e.target.dataset.id);
+          //обращаемся к атрибуту id
           this.selectItem(+e.target.dataset.id);
           this.close();
         }
       }
     });
   }
-  //находит объект из this.options, у которого 'value' совпадает с'id'
-  // и выводит в Label текст (объект.label = "название города")
-  //метод записывается в прототип
+
+  //**********методы***********
   selectItem(id) {
     const selectedElement = this.options.find((item) => item.value === id);
     this.$label.innerHTML = selectedElement.label;
-    console.log(selectedElement);
   }
-
   open() {
     this.$select.classList.add("active");
   }
+
   close() {
     this.$select.classList.remove("active");
   }
@@ -121,37 +110,19 @@ class Select {
     const group = new Map();
     console.log("group", group);
 
+    //записываем значения в коллекцию
     items.forEach((item) => {
       if (!group.has(item.group)) {
-        group.set(item.group, [item]);
+        group.set(item.group, [item]); // ключ ('Первая'), значение [{}]
       } else {
+        //оператор расширения spread
         group.set(item.group, [...group.get(item.group), item]);
       }
     });
-    console.log(Array.from(group.entries()));
-    console.log(Array.from(group.keys()));
-    console.log(Array.from(group.values()));
 
+    //преобразует в массив пар ключ-значение, где ключ- это имя группы, а значение - массив опций, принадлежащих этой группе.
     return Array.from(group.entries());
   }
 }
 
 const customSelect = new Select(".select", options, "350px");
-console.log(customSelect);
-
-// const customSelect2 = new Select(".select", options, "750px");
-// console.log(customSelect2);
-
-// function initGroup(items) {
-
-// }
-// initGroup(options);
-
-// [
-//     ['Первая', [{ label: 'Витебск' }, { label: 'Могилев' }]],
-//     ['Вторая', [{ label: 'Гомель' }, { label: 'Брест' }]],
-//     ['Третья', [{ label: 'Гродно' }, ]]
-//     [undefined, [
-//         [{ label: 'Минск' }, { label: 'Москва' }]
-//     ]]
-// ]

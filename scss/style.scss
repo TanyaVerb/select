@@ -1,95 +1,90 @@
 :root {
-    --select-width: 250px;
-    --label-height: 40px;
+  --select-width: 250px;
+  --label-height: 40px;
 }
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 %overflow-ellipsis {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @mixin overflow-multi-ellipsis($coutRow) {
-    display: -webkit-box;
-    max-width: 100%;
-    -webkit-line-clamp: $coutRow;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    // text-overflow: ellipsis;
-   
+  display: -webkit-box;
+  max-width: 100%;
+  -webkit-line-clamp: $coutRow;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  // text-overflow: ellipsis;
 }
 
 body {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .select {
-    .container {
-        width: var(--select-width);
-        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        font-weight: 600;
-        font-size: 19px;
-        position: relative;
+  .container {
+    width: var(--select-width);
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    font-weight: 600;
+    font-size: 19px;
+    position: relative;
+  }
 
-    }
+  &__label {
+    height: var(--label-height);
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid black;
+    @extend %overflow-ellipsis;
+  }
 
-    &__label {
-        height: var(--label-height);
-        padding: 8px;
-        border-radius: 10px;
-        border: 1px solid black;
-        @extend %overflow-ellipsis;
-       
-    }
+  &__drop-down {
+    display: none;
+    list-style: none;
+    border: 1px solid black;
+    border-radius: 10px;
+    position: absolute;
+    top: var(--label-height);
+    width: 100%;
+    left: 0;
+    min-height: var(--label-height);
+    max-height: 200px;
+    overflow-y: auto;
 
-    &__drop-down {
-        display: none;
-        list-style: none;
-        border: 1px solid black;
-        border-radius: 10px;
-        position: absolute;
-        top: var(--label-height);
-        width: 100%;
-        left: 0;
-        min-height: var(--label-height);
-        max-height: 200px;
-        overflow-y: auto;
- 
-        li {
-            height: var(--label-height);
-        padding: 4px;
-        @include overflow-multi-ellipsis(2);
-        &:hover{
-            background-color: aqua;
-        }
+    li {
+      height: var(--label-height);
+      padding: 4px;
+      @include overflow-multi-ellipsis(2);
+      &:hover {
+        background-color: aqua;
+      }
     }
-    &::-webkit-scrollbar{
-        width: 7px;
+    &::-webkit-scrollbar {
+      width: 7px;
     }
-    &::-webkit-scrollbar-thumb{
-        background-color: black;
-        border-radius: 5px;
+    &::-webkit-scrollbar-thumb {
+      background-color: black;
+      border-radius: 5px;
     }
-    &::-webkit-scrollbar-track{
-        background-color: inherit;
-        border-radius: 10%;
-        margin: 2px;
+    &::-webkit-scrollbar-track {
+      background-color: inherit;
+      border-radius: 10%;
+      margin: 2px;
     }
+  }
+  &.active {
+    & .select__drop-down {
+      display: block;
     }
-&.active{
-    & .select__drop-down{
-display: block;
-    }
-    
-}
-    
+  }
 }
